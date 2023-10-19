@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+
+            background-color: antiquewhite;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #options{
+
+            display: flex;
+            justify-content: center;
+        }
+
+        #res {
+
+            text-align: center;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <div id="padre">
+
+        <h1>JUEGO DE LOS DADOS</h1>
+    
+        <div id="options">
+    
+            <select name="juego" id="juego">
+                
+                <option value="rol">ROL</option>
+                <option value="parxis">PARXIS</option>
+                <option value="CaraCruz">CARA O CRUZ</option>
+            
+            </select>
+    
+            <button onclick="iniciarJuego()" type="button">TIRAR</button>
+        </div>
+    
+        <div id="res">
+    
+            <p id="numero"></p>
+            <p id="resultado"></p>
+    
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+
+        function iniciarJuego(){
+
+            var select = document.getElementById("juego").value;
+
+            console.log(select);
+
+            if(select == "rol"){
+
+                var partidaRol = new Rol(12,"Mago");
+
+                
+                partidaRol.jugar();
+
+            } else{
+
+                if(select == "parxis") {
+
+                    var partidaParxis = new Parxis(6,3);
+
+                    partidaParxis.jugar();
+                } else {
+
+                    if(select == "CaraCruz"){
+
+                        var partidaCoC = new CaraCruz(2,"Mortadelo");
+
+                        partidaCoC.jugar();
+                    }
+
+                }
+            }
+        }
+
+
+        class Dado {
+
+            numeroCaras;
+
+            constructor(numeroCaras){
+
+                this.numeroCaras = numeroCaras;
+
+            }
+
+            descripcionDado(){
+
+                console.log("Este dado tiene " + this.numeroCaras + " caras.");
+
+            }
+
+            jugar(){
+
+       
+            }
+        }
+
+        class CaraCruz extends Dado {
+
+            tipoDeCara;
+
+            constructor(numeroCaras,tipoDeCara){
+
+                super(numeroCaras);
+                this.tipoDeCara = tipoDeCara;
+            }   
+
+            descripcionDado(){
+
+
+
+                console.log("Este dado tiene " + this.numeroCaras + " caras y la cara es de " + this.tipoDeCara);
+
+            }
+
+            jugar(){
+
+                var numeroRandom = Math.floor(Math.random() * this.numeroCaras) + 1;
+
+                if(numeroRandom == 1){
+
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS GANADO!";
+
+
+                } else {
+                    
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS PERDIDO, INTENTALO DE NUEVO!";
+                }
+
+            }
+
+        }
+
+        class Parxis extends Dado{
+
+            numeroJugadores;
+
+            constructor(numeroCaras,numeroJugadores){
+
+                super(numeroCaras);
+                this.numeroJugadores = numeroJugadores;
+            }
+
+            descripcionDado(){
+
+                console.log("Este dado tiene " + this.numeroCaras + " caras y juegan un numero de " + this.numeroJugadores);
+
+            }
+
+            jugar(){
+
+                var numeroRandom = Math.floor(Math.random() * this.numeroCaras) + 1;
+
+                if(numeroRandom == 1){
+
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS GANADO!";
+
+                } else {
+
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS PERDIDO, INTENTALO DE NUEVO!";
+                }
+            }
+        }
+
+        class Rol extends Dado{
+
+            tipoDeRol;
+
+            constructor(numeroCaras,tipoDeRol){
+
+                super(numeroCaras);
+                this.tipoDeRol = tipoDeRol;
+
+            }           
+
+            descripcionDado(){
+
+                console.log("Este dado tiene " + this.numeroCaras + " caras y es del rol " + this.tipoDeRol);
+
+            }
+
+            jugar(){
+
+                var numeroRandom = Math.floor(Math.random() * this.numeroCaras) + 1;
+
+                if(numeroRandom == 1){
+
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS GANADO!";
+
+                } else {
+
+                    document.getElementById("numero").innerHTML=numeroRandom;
+                    document.getElementById("resultado").innerHTML="HAS PERDIDO, INTENTALO DE NUEVO!";
+                }
+            }
+        }
+
+    </script>
+    
+</body>
+</html>
