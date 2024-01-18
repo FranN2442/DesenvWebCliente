@@ -39,7 +39,7 @@
             <select name="juego" id="juego">
                 
                 <option value="rol">ROL</option>
-                <option value="parxis">PARXIS</option>
+                <option value="parchis">PARCHIS</option>
                 <option value="CaraCruz">CARA O CRUZ</option>
             
             </select>
@@ -76,11 +76,11 @@
 
             } else{
 
-                if(select == "parxis") {
+                if(select == "parchis") {
 
-                    var partidaParxis = new Parxis(6,3);
+                    var partidaParchis = new Parchis(6,3);
 
-                    partidaParxis.jugar();
+                    partidaParchis.jugar();
                 } else {
 
                     if(select == "CaraCruz"){
@@ -155,7 +155,7 @@
 
         }
 
-        class Parxis extends Dado{
+        class Parchis extends Dado{
 
             numeroJugadores;
 

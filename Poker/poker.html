@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker</title>
+</head>
+
+<body>
+    <script>
+        let cards = [
+            "2_of_clubs.png",
+            "2_of_diamonds.png",
+            "2_of_hearts.png",
+            "2_of_spades.png",
+            "3_of_clubs.png",
+            "3_of_diamonds.png",
+            "3_of_hearts.png",
+            "3_of_spades.png",
+            "4_of_clubs.png",
+            "4_of_diamonds.png",
+            "4_of_hearts.png",
+            "4_of_spades.png",
+            "5_of_clubs.png",
+            "5_of_diamonds.png",
+            "5_of_hearts.png",
+            "5_of_spades.png",
+            "6_of_clubs.png",
+            "6_of_diamonds.png",
+            "6_of_hearts.png",
+            "6_of_spades.png",
+            "7_of_clubs.png",
+            "7_of_diamonds.png",
+            "7_of_hearts.png",
+            "7_of_spades.png",
+            "8_of_clubs.png",
+            "8_of_diamonds.png",
+            "8_of_hearts.png",
+            "8_of_spades.png",
+            "9_of_clubs.png",
+            "9_of_diamonds.png",
+            "9_of_hearts.png",
+            "9_of_spades.png",
+            "10_of_clubs.png",
+            "10_of_diamonds.png",
+            "10_of_hearts.png",
+            "10_of_spades.png",
+            "ace_of_clubs.png",
+            "ace_of_diamonds.png",
+            "ace_of_hearts.png",
+            "ace_of_spades.png",
+            "ace_of_spades2.png",
+            "black_joker.png",
+            "jack_of_clubs.png",
+            "jack_of_clubs2.png",
+            "jack_of_diamonds.png",
+            "jack_of_diamonds2.png",
+            "jack_of_hearts.png",
+            "jack_of_hearts2.png",
+            "jack_of_spades.png",
+            "jack_of_spades2.png",
+            "king_of_clubs.png",
+            "king_of_clubs2.png",
+            "king_of_diamonds.png",
+            "king_of_diamonds2.png",
+            "king_of_hearts.png",
+            "king_of_hearts2.png",
+            "king_of_spades.png",
+            "king_of_spades2.png",
+            "queen_of_clubs.png",
+            "queen_of_clubs2.png",
+            "queen_of_diamonds.png",
+            "queen_of_diamonds2.png",
+            "queen_of_hearts.png",
+            "queen_of_hearts2.png",
+            "queen_of_spades.png",
+            "queen_of_spades2.png",
+            "red_joker.png",
+        ];
+
+        /*
+            Dado este array crea 5 botones que llamen (onclick) cada uno 
+            a una función que haga lo siguiente:
+
+            1. Pinten el nombre de las cartas que sean king.
+            2. Pinten el nombre de las cartas que sean king o queen.
+            3. Pinten el nombre de las cartas que sean números.
+            4. Pinten el nombre de las cartas que NO sean jack o queen.
+            5. Pinten el nombre de las cartas que NO sean números.
+
+            Ahora debes eliminar el onclick del boton y añadir un event listener 
+            al boton para que, cuando se haga click se llame cada uno a su función
+        */
+
+        let body = document.querySelector("body");
+
+        // CREAR BOTONES CON EL DOM:
+        let button1 = document.createElement('button');
+        let button2 = document.createElement('button');
+        let button3 = document.createElement('button');
+        let button4 = document.createElement('button');
+        let button5 = document.createElement('button');
+
+        // B1
+        button1.innerHTML = "King Cards";
+        // button1.onclick = kingCards;
+        button1.addEventListener("click",kingCards);
+
+        // B2
+        button2.innerHTML = "King or Queen Cards";
+        // button2.onclick = kingORQueenCards;
+        button2.addEventListener("click",kingORQueenCards);
+
+        // B3
+        button3.innerHTML = "Numbers Cards";
+        // button3.onclick = numberCards;
+        button3.addEventListener("click",numberCards);
+
+        // B4
+        button4.innerHTML = "NO Jacks NO Queens";
+        // button4.onclick = noJacksnoQueens;
+        button4.addEventListener("click",noJacksnoQueens);
+
+        // B5
+        button5.innerHTML = "NO Numbers";
+        // button5.onclick = noNumbers;
+        button5.addEventListener("click",noNumbers);
+
+        // DIV DE LOS RESULTADOS
+        let div = document.createElement("div");
+
+        // AÑADIR BOTONES AL BODY
+        body.append(button1);
+        body.append(button2);
+        body.append(button3);
+        body.append(button4);
+        body.append(button5);
+
+
+        function kingCards() {
+
+            div.innerHTML = "";
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let arrayWord = splitCards(cards[i]);
+
+                if (arrayWord[0] == "king") {
+
+
+                    div.innerHTML += cards[i] + "<br>";
+
+                }
+
+                body.append(div);
+                console.log(arrayWord);
+
+            }
+
+        }
+
+        function kingORQueenCards() {
+
+            div.innerHTML = "";
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let arrayWord = splitCards(cards[i]);
+
+
+                if (arrayWord[0] == "king" || arrayWord[0] == "queen") {
+
+
+                    div.innerHTML += cards[i] + "<br>";
+
+                }
+
+                body.append(div);
+                console.log(arrayWord);
+
+            }
+
+        }
+
+        function numberCards() {
+
+            div.innerHTML = "";
+
+            let regex = /^[0-9]+$/;
+
+
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let arrayWord = splitCards(cards[i]);
+
+
+                if (arrayWord[0].match(regex)) {
+
+
+                    div.innerHTML += cards[i] + "<br>";
+
+                }
+
+                body.append(div);
+                console.log(arrayWord);
+
+            }
+
+        }
+
+        function noJacksnoQueens(){
+
+            div.innerHTML = "";
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let arrayWord = splitCards(cards[i]);
+
+
+                if (arrayWord[0] != "jack" || arrayWord[0] == "queen") {
+
+
+                    div.innerHTML += cards[i] + "<br>";
+
+                }
+
+                body.append(div);
+                console.log(arrayWord);
+
+            }
+
+        };
+
+        function noNumbers(){
+
+            div.innerHTML = "";
+
+            let regex = /^[0-9]+$/;
+
+
+
+            for (let i = 0; i < cards.length; i++) {
+
+                let arrayWord = splitCards(cards[i]);
+
+
+                if (!arrayWord[0].match(regex)) {
+
+
+                    div.innerHTML += cards[i] + "<br>";
+
+                }
+
+                body.append(div);
+                console.log(arrayWord);
+
+            }
+
+        };
+
+
+        function splitCards(card) {
+
+            let wordSplit = card.split("_");
+
+            return wordSplit;
+
+        }
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

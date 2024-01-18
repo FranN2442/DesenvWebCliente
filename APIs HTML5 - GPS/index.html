@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocalitzador</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+        let array = [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            function setLocation(pos) {
+
+                var map = L.map('map').setView([pos.lat, pos.lng], 13);
+
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+                var customIcon = L.icon({
+                    iconUrl: './avion.png',  // Especifica la ruta a la teva icona personalitzada
+                    iconSize: [32, 32],  // Especifica la mida de la icona [amplada, alcada]
+                    iconAnchor: [16, 32], // Punt d'ancoratge de la icona respecte al seu centre [amplada/2, alcada]
+                    popupAnchor: [0, -32] // Punt d'ancoratge del popup respecte a la icona [amplada/2, -alcada]
+                });
+
+                let stringArray = localStorage.getItem('locationHistory');
+
+                let locationArray = JSON.parse(stringArray);
+
+                let finalArray = locationArray.slice(locationArray.length - 5, locationArray.length);
+
+                finalArray.forEach(location => {
+
+                    L.marker([location.lat, location.lng], {icon : customIcon}).addTo(map)
+                        .bindPopup('Última ubicació');
+
+                });
+
+                console.log(finalArray);
+
+
+
+            }
+
+            function updateLocalStorage(pos) {
+
+                if (localStorage.length == 0) {
+
+                    array.push(pos);
+
+                    localStorage.setItem('locationHistory', JSON.stringify(array));
+
+
+                } else {
+
+
+                    let getArrayString = localStorage.getItem('locationHistory');
+
+                    array = JSON.parse(getArrayString);
+
+
+                    array.push(pos);
+
+                    localStorage.setItem('locationHistory', JSON.stringify(array));
+
+
+                }
+
+            }
+
+
+
+            function getLocation() {
+
+                const location = navigator.geolocation.getCurrentPosition(function (pos) {
+
+                    console.log(pos);
+
+                    const coords = {
+                        'lat': pos.coords.latitude,
+                        'lng': pos.coords.longitude
+                    }
+
+                    updateLocalStorage(coords);
+                    setLocation(coords);
+
+                });
+
+
+            }
+
+            getLocation();
+
+        })
+
+
+    </script>
+
+</body>
+
+</html>
